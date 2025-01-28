@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Mods Hub - Discover, Download & Explore</title>
+    <meta name="description" content="Your ultimate destination for game mods, updates, and enhanced gaming experiences. Discover, download, and transform your gameplay.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <style>
+        /* Light Theme Variables */
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #60a5fa;
+            --background-dark: #f8f9fa;
+            --card-background: #ffffff;
+            --text-light: #333333;
+            --white: #ffffff;
+            --transition-speed: 0.3s;
+        }
+
+        /* Dark Theme Variables */
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #60a5fa;
+            --background-dark: #0f172a;
+            --card-background: #1e293b;
+            --text-light: #94a3b8;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--background-dark);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--card-background);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, var(--card-background), var(--background-dark));
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .main-nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .main-nav .logo img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform var(--transition-speed);
+        }
+
+        .main-nav .logo img:hover {
+            transform: scale(1.1);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            position: relative;
+            transition: color var(--transition-speed);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width var(--transition-speed);
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero-section {
+            background: url('https://via.placeholder.com/1500x600?text=Game+Mods+Hub') no-repeat center center/cover;
+            padding: 100px 20px;
+            text-align: center;
+            color: var(--white);
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-btn {
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background var(--transition-speed);
+        }
+
+        .cta-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .search-filter-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: var(--card-background);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .search-bar {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            background: var(--background-dark);
+            border: 2px solid var(--primary-color);
+            color: var(--text-light);
+            border-radius: 8px 0 0 8px;
+        }
+
+        .search-bar button {
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            transition: background var(--transition-speed);
+        }
+
+        .search-bar button:hover {
+            background: var(--secondary-color);
+        }
+
+        .filter-section {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--text-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .game-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: var(--card-background);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,123,255,0.2);
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .game-card .content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .game-card .details {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .game-card .details .tag {
+            background: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .game-card .details .size {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .game-card p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .game-card .additional-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .game-card .additional-info span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .game-card .additional-info i {
+            color: var(--primary-color);
+        }
+
+        .download-btn {
+            margin-top: auto;
+            display: block;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: var(--white);
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: transform var(--transition-speed);
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .main-footer {
+            background: var(--card-background);
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+        }
+
+        .footer-section p {
+            color: var(--text-light);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            transition: color var(--transition-speed);
+        }
+
+        .social-links a:hover {
+            color: var(--white);
+        }
+
+        @media (max-width: 768px) {
+            .main-nav {
+                flex-direction: column;
+                position: relative;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <nav class="main-nav" aria-label="Main Navigation">
+        <div class="logo">
+            <img src="https://play-lh.googleusercontent.com/gC-6AZWRtbfi3n8FLSMGVCPcz9Z5CBJ-H0DnHHsfhMANDf9d15-oloS93RJrlyQSjC0" 
+                 alt="Game Downloads Hub Logo" 
+                 aria-hidden="true">
+            <h1>Game Mods Hub</h1>
+        </div>
+
+        <div class="mobile-menu-toggle" aria-label="Toggle mobile menu" role="button" tabindex="0">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <div class="nav-links">
+            <a href="#" aria-label="Home"><i class="fas fa-home"></i> Home</a>
+            <a href="#" aria-label="Categories"><i class="fas fa-folder"></i> Categories</a>
+            <a href="#" aria-label="Trending"><i class="fas fa-fire"></i> Trending</a>
+            <a href="#" aria-label="About"><i class="fas fa-info-circle"></i> About</a>
+            <a href="#" aria-label="Login" class="login-btn"><i class="fas fa-user"></i> Login</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <div class="search-filter-container">
+                <div class="search-bar">
+                    <input 
+                        type="search" 
+                        id="game-search" 
+                        placeholder="Search mods, games, and categories" 
+                        aria-label="Search input"
+                    >
+                    <button aria-label="Search">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+
+                <div class="filter-section" role="group" aria-label="Game filters">
+                    <button class="filter-btn active" data-filter="all">All Mods</button>
+                    <button class="filter-btn" data-filter="popular">Popular</button>
+                    <button class="filter-btn" data-filter="recent">Recent</button>
+                    <button class="filter-btn" data-filter="updated">Updated</button>
+                </div>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <div class="game-list" id="mod-list">
+                <div class="game-card" data-category="popular mod">
+                    <img src="https://play-lh.googleusercontent.com/LByrur1mTmPeNr0ljI-uAUcct1rzmTve5Esau1SwoAzjBXQUby6uHIfHbF9TAT51mgHm=w480-h960-rw" 
+                         alt="Clash of Clans Enhanced Mod" 
+                         loading="lazy">
+                    <div class="content">
+                        <h2>Clash of Clans Pro Mod</h2>
+                        <div class="details">
+                            <span class="tag">Popular</span>
+                            <span class="size">215 MB</span>
+                        </div>
+                        <p>Unlock unlimited resources and dominate battles!</p>
+                        <div class="additional-info">
+                            <span><i class="fas fa-code"></i> Version: 15.0.6</span>
+                            <span><i class="fas fa-download"></i> Downloads: 500K+</span>
+                            <span><i class="fas fa-calendar-alt"></i> Last Updated: Jan 2025</span>
+                        </div>
+                        <a href="https://tinyurl.com/Gamedownloadapk" class="download-btn" aria-label="Download Clash of Clans Mod">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+
+                <div class="game-card" data-category="recent mod">
+                    <img src="https://play-lh.googleusercontent.com/27O5tpaYE82W6m30rJ_MX3-UvshlDM6O8oXDxb6GseYW2T7P8UNT19727MGmz-0q3w=w480-h960-rw" 
+                         alt="Minecraft Enhanced Survival Mod" 
+                         loading="lazy">
+                    <div class="content">
+                        <h2>Minecraft Expanded Mod</h2>
+                        <div class="details">
+                            <span class="tag">Recent</span>
+                            <span class="size">310 MB</span>
+                        </div>
+                        <p>New biomes, crafting, and gameplay expansions!</p>
+                        <div class="additional-info">
+                            <span><i class="fas fa-code"></i> Version: 1.20.1</span>
+                            <span><i class="fas fa-download"></i> Downloads: 750K+</span>
+                            <span><i class="fas fa-calendar-alt"></i> Last Updated: Jan 2025</span>
+                        </div>
+                        <a href="https://tinyurl.com/Gamedownloadapk" class="download-btn" aria-label="Download Minecraft Mod">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+
+                <div class="game-card" data-category="recent mod">
+                    <img src="https://play-lh.googleusercontent.com/WNWZaxi9RdJKe2GQM3vqXIAkk69mnIl4Cc8EyZcir2SKlVOxeUv9tZGfNTmNaLC717Ht=w480-h960-rw" 
+                         alt="Roblox Enhanced Mod" 
+                         loading="lazy">
+                    <div class="content">
+                        <h2>Roblox Enhanced Mod</h2>
+                        <div class="details">
+                            <span class="tag">Recent</span>
+                            <span class="size">150 MB</span>
+                        </div>
+                        <p>New skins, tools, and gameplay enhancements for Roblox!</p>
+                        <div class="additional-info">
+                            <span><i class="fas fa-code"></i> Version: 2.5.3</span>
+                            <span><i class="fas fa-download"></i> Downloads: 500K+</span>
+                            <span><i class="fas fa-calendar-alt"></i> Last Updated: Feb 2025</span>
+                        </div>
+                        <a href="https://tinyurl.com/Gamedownloadapk" class="download-btn" aria-label="Download Roblox Mod">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+
+                <div class="game-card" data-category="updated">
+                    <img src="https://play-lh.googleusercontent.com/mTfO4nlVKAN2Pd7ZbBXTkitNKQnjkPo0CkRhuorLDJi-wLqx0rDZuK2ndGNGFVj3EA=w480-h960-rw" 
+                         alt="Train Valley 2 Railway Management" 
+                         loading="lazy">
+                    <div class="content">
+                        <h2>Train Valley 2</h2>
+                        <div class="details">
+                            <span class="tag">Updated</span>
+                            <span class="size">145 MB</span>
+                        </div>
+                        <p>Build and manage your ultimate railway empire!</p>
+                        <div class="additional-info">
+                            <span><i class="fas fa-code"></i> Version: 2.3.5</span>
+                            <span><i class="fas fa-download"></i> Downloads: 300K+</span>
+                            <span><i class="fas fa-calendar-alt"></i> Last Updated: Jan 2025</span>
+                        </div>
+                        <a href="https://tinyurl.com/Gamedownloadapk" class="download-btn" aria-label="Download Train Valley 2">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>Your ultimate destination for game mods, updates, and enhanced gaming experiences.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Email: sharbal33@gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.setAttribute('data-theme', savedTheme);
+            updateToggleIcon(savedTheme);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateToggleIcon(newTheme);
+        });
+
+        function updateToggleIcon(theme) {
+            const icon = themeToggle.querySelector('i');
+            icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        const searchInput = document.getElementById('game-search');
+        const modList = document.getElementById('mod-list');
+        const gameCards = modList.getElementsByClassName('game-card');
+
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+
+            Array.from(gameCards).forEach(card => {
+                const title = card.querySelector('h2').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+    </script>
+</body>
+</html>
